@@ -5,6 +5,8 @@ GiovanniClient is Closed source (no skidding) QoL mod for Hypixel Skyblock for m
 It is the spiritual successor to {Polar Client} (https://docs.polarclient.lol/polar/info/feature-list) , which featured a small list of "innocent cheats". 
 
 https://www.virustotal.com/gui/file/b78fac2ad34f9adcba850adc34749d2124149566c8f25e6f38fdda4608beeda5/details
+https://tria.ge/260307-gpg21adx6r/behavioral1
+
 
 ## Core Features
 
