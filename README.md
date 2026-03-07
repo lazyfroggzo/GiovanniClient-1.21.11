@@ -10,8 +10,8 @@ It is the spiritual successor to [Polar Client](https://docs.polarclient.lol/pol
 
 ## Core Features
 
-* **Auto Soulcry** (thanks  @WalterBurger)
-* **Auto Close hoppity eggs GUI** (thanks @WalterBurger)
+* **Auto Soulcry** (thanks  @HankSchneider
+* **Auto Close hoppity eggs GUI** (thanks @HankSchneider)
 * **Various rendering features** such as: NoFog, NoFireOverlay, NoBlindness, NoDarkness, NoHurtCam (...and more)
 * **Disable Lightning Bolts** rendering
 * **Show Invisible mobs** such as Shadow Assassins, Fels, etc. (includes an option to show EVERYTHING that's invisible)
