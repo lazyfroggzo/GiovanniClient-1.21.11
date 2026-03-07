@@ -6,6 +6,7 @@ It is the spiritual successor to {Polar Client} (https://docs.polarclient.lol/po
 
 https://www.virustotal.com/gui/file/4219f46b80028336703c4914b17024b88a5828d6e6eb48fb5d94ff0133819663/details
 https://tria.ge/260307-n6e3ascs4s/behavioral1
+https://opentip.kaspersky.com/4219F46B80028336703C4914B17024B88A5828D6E6EB48FB5D94FF0133819663/results?tab=upload
 
 ## Core Features
 
