@@ -1,4 +1,4 @@
-# GiovanniClient
+# GiovanniClient 1.21.11
 
 
 GiovanniClient is Closed source (no skidding) QoL mod for Hypixel Skyblock for modern minecraft versions.
