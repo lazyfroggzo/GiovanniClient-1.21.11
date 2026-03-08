@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiovanniClient — Hypixel Skyblock Mod 1.21.11</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0f0f0f;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --accent: #00d4ff;
+            --accent-hover: #00e8ff;
+            --accent-dark: #0099cc;
+            --glass: rgba(245, 245, 247, 0.05);
+            --glass-border: rgba(245, 245, 247, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 9999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .nav-logo {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(0, 212, 255, 0.1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-cta:hover {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent-hover);
+        }
+
+        .discord-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .discord-soon:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 80px 20px 0;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 153, 204, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 12vw, 120px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.8s ease-out -0.1s both;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 3vw, 24px);
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 600px;
+            font-weight: 300;
+            letter-spacing: -0.3px;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .analysis-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.3px;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--accent-hover);
+        }
+
+        /* Section */
+        section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+        }
+
+        section h2 {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 800;
+            margin-bottom: 48px;
+            letter-spacing: -0.8px;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            border-radius: 16px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, transparent 50%);
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            background: rgba(245, 245, 247, 0.08);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(0, 212, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Highlight Section */
+        .highlight {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 153, 204, 0.04) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            margin: 64px 0;
+            text-align: center;
+        }
+
+        .highlight h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .highlight p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features List */
+        .features-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 16px;
+            padding: 24px;
+            border-radius: 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            transition: all 0.2s;
+        }
+
+        .feature-item:hover {
+            background: rgba(245, 245, 247, 0.08);
+        }
+
+        .feature-item-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .feature-item-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feature-item-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--accent);
+            line-height: 1.8;
+        }
+
+        /* Warning Box */
+        .warning {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .warning strong {
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 48px 40px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        .analysis-buttons .btn {
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            section {
+                padding: 48px 20px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+
+            .highlight {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">Giovanni</a>
+        <div class="nav-links">
+            <a href="#" class="nav-cta discord-soon">Discord (Soon)</a>
+            <a href="https://www.virustotal.com/gui/file/4219f46b80028336703c4914b17024b88a5828d6e6eb48fb5d94ff0133819663/details" class="nav-cta">VirusTotal</a>
+            <a href="https://tria.ge/260307-n6e3ascs4s/behavioral1" class="nav-cta">Tria.ge</a>
+            <a href="https://opentip.kaspersky.com/4219F46B80028336703C4914B17024B88A5828D6E6EB48FB5D94FF0133819663/results?tab=upload" class="nav-cta">Kaspersky</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-subtitle">Hypixel Skyblock — 1.21.11</div>
+        <h1>GiovanniClient</h1>
+        <p>Advanced Hypixel Skyblock cheat client with ESP, rendering tweaks, and automation features.</p>
+        <div class="hero-cta">
+            <a href="https://github.com/lazyfroggzo/GiovanniClient-1.21.11/releases" class="btn btn-primary">Download</a>
+            <div class="analysis-buttons">
+                <a href="https://www.virustotal.com/gui/file/4219f46b80028336703c4914b17024b88a5828d6e6eb48fb5d94ff0133819663/details" class="btn btn-secondary">VirusTotal Analysis</a>
+                <a href="https://tria.ge/260307-n6e3ascs4s/behavioral1" class="btn btn-secondary">Tria.ge Analysis</a>
+                <a href="https://opentip.kaspersky.com/4219F46B80028336703C4914B17024B88A5828D6E6EB48FB5D94FF0133819663/results?tab=upload" class="btn btn-secondary">Kaspersky Analysis</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="section-label">Capabilities</div>
+        <h2>Everything You Need</h2>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">👁️</div>
+                    <h3>Invisible Mob ESP</h3>
+                    <p>See invisible mobs like Shadow Assassins and Fels. Option to render everything invisible.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">✨</div>
+                    <h3>Dungeon Glowing</h3>
+                    <p>Highlight starred dungeon mobs with glowing effect for easy identification.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Rendering Tweaks</h3>
+                    <p>Remove fog, fire overlay, blindness, darkness, hurt cam and more visual clutter.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Auto Soulcry</h3>
+                    <p>Automatically activate Soulcry for enhanced combat efficiency.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">🥚</div>
+                    <h3>Hoppity Eggs Auto Close</h3>
+                    <p>Automatically close hoppity eggs GUI. Credits to @HankSchneider.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Rift Features</h3>
+                    <p>Auto Agaricus Cap farming and various Rift optimization tools.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">⚓</div>
+                    <h3>Lightning Removal</h3>
+                    <p>Disable lightning bolt rendering for cleaner visuals during combat.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Minecraft 1.21.11</h3>
+                    <p>Optimized for Minecraft version 1.21.11. Ensure you're running the correct version.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Fabric API 1.21.11</h3>
+                    <p>Requires Fabric API 1.21.11. Install before using GiovanniClient.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Features -->
+    <section>
+        <div class="highlight">
+            <h3>Combat & Visuals Optimized</h3>
+            <p>Purpose-built for Skyblock. See what matters, remove what doesn't, and dominate with enhanced awareness.</p>
+        </div>
+
+        <h2>What's Included</h2>
+        <div class="features-list">
+            <div class="feature-item">
+                <div class="feature-item-icon">→</div>
+                <div class="feature-item-content">
+                    <h4>NoFog, NoFireOverlay</h4>
+                    <p>Remove visual effects that block your view.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-item-icon">→</div>
+                <div class="feature-item-content">
+                    <h4>NoBlindness & NoDarkness</h4>
+                    <p>Always maintain clear vision in any situation.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-item-icon">→</div>
+                <div class="feature-item-content">
+                    <h4>NoHurtCam</h4>
+                    <p>Disable screen shake from damage for better control.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-item-icon">→</div>
+                <div class="feature-item-content">
+                    <h4>Shadow Assassin Detection</h4>
+                    <p>See invisible Shadow Assassins before they see you.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-item-icon">→</div>
+                <div class="feature-item-content">
+                    <h4>Fel Visibility</h4>
+                    <p>Render invisible Fels and other hidden mobs.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-item-icon">→</div>
+                <div class="feature-item-content">
+                    <h4>Full Invisible Rendering</h4>
+                    <p>Option to see absolutely everything that's invisible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download">
+        <div class="section-label">Get Started</div>
+        <h2>Download Now</h2>
+
+        <div class="warning">
+            <strong>⚠️ Important:</strong> This mod enhances your Skyblock experience with ESP and rendering features. Always ensure you're following Hypixel's current mod policies. We recommend testing on an alt account first.
+        </div>
+
+        <div style="text-align: center; margin-top: 48px;">
+            <a href="https://github.com/lazyfroggzo/GiovanniClient-1.21.11/releases" class="btn btn-primary">Download GiovanniClient</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/lazyfroggzo/GiovanniClient-1.21.11/releases">Download</a>
+            <a href="https://www.virustotal.com/gui/file/4219f46b80028336703c4914b17024b88a5828d6e6eb48fb5d94ff0133819663/details">VirusTotal</a>
+            <a href="https://tria.ge/260307-n6e3ascs4s/behavioral1">Tria.ge</a>
+            <a href="https://opentip.kaspersky.com/4219F46B80028336703C4914B17024B88A5828D6E6EB48FB5D94FF0133819663/results?tab=upload">Kaspersky</a>
+        </div>
+        <p>© 2024 GiovanniClient. Closed source. Use at your own risk.</p>
+    </footer>
+</body>
+</html>
